@@ -1,6 +1,41 @@
 module FizzBuzz
 
 
+total fizzbuzz : Nat -> Nat
+fizzbuzz Z = Z
+fizzbuzz n = case modNat n 15 of
+      Z =>
+        (Nat.pred . Nat.pred . Nat.pred) n
+      (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))))) =>
+         (Nat.pred . Nat.pred) n
+      (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) =>
+         Nat.pred n
+      (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) =>
+         (Nat.pred . Nat.pred) n
+      (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) =>
+         Nat.pred n
+      (S (S (S (S (S (S (S (S (S (S Z)))))))))) =>
+         Nat.pred n
+      (S (S (S (S (S (S (S (S (S Z))))))))) =>
+         (Nat.pred . Nat.pred . Nat.pred) n
+      (S (S (S (S (S (S (S (S Z)))))))) =>
+         (Nat.pred . Nat.pred) n
+      (S (S (S (S (S (S (S Z))))))) =>
+         Nat.pred n
+      (S (S (S (S (S (S Z)))))) =>
+         Nat.pred n
+      (S (S (S (S (S Z))))) =>
+         (Nat.pred . Nat.pred) n
+      (S (S (S (S Z)))) =>
+         Nat.pred n
+      (S (S (S Z))) =>
+         (Nat.pred . Nat.pred . Nat.pred) n
+      (S (S Z)) =>
+         (Nat.pred . Nat.pred) n
+      (S Z) =>
+         Nat.pred n
+
+
 data FB : Nat -> Type where
      Nil : FB Z
      Fizz : FB (fizzbuzz n) -> FB n
@@ -8,29 +43,8 @@ data FB : Nat -> Type where
      FizzBuzz : FB (fizzbuzz n) -> FB n
 
 
-total fizzbuzz : Nat -> Nat
-fizzbuzz Z = Z
-fizzbuzz n = case modNat 15 n of
-    Z =>
-      (Nat.pred . Nat.pred . Nat.pred) n
-    (S (S (S (S ( S (S (S (S (S (S (S (S Z)))))))))))) =>
-       (Nat.pred . Nat.pred) n
-    (S (S (S (S (S (S (S (S (S (S Z)))))))))) =>
-       Nat.pred n
-    (S (S (S (S (S (S (S (S (S Z))))))))) =>
-       (Nat.pred . Nat.pred . Nat.pred) n
-    (S (S (S (S (S (S Z)))))) =>
-       Nat.pred n
-    (S (S (S (S (S Z))))) =>
-       (Nat.pred . Nat.pred) n
-    (S (S (S Z))) =>
-       (Nat.pred . Nat.pred . Nat.pred) n
-    _ =>
-      fizzbuzz (pred n)
-
-
-fizz : FB 2
-fizz = Fizz (Fizz [])
+-- fizz : FB 2
+-- fizz = Fizz (Fizz [])
 
 
 {-
