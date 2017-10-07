@@ -20,16 +20,25 @@ data NatMod15 : Nat -> Type where
 
 
 nMod15 : (n : Nat) -> NatMod15 n
-nMod15 Z = Zero 0
-nMod15 (S Z) = One 0
-nMod15 (S (S Z)) = Two 0
-nMod15 (S (S (S Z))) = Three 0
-nMod15 (S (S (S (S Z)))) = Four 0
-nMod15 (S (S (S (S (S Z))))) = Five 0
-nMod15 (S (S (S (S (S (S Z)))))) = Six 0
-nMod15 (S (S (S (S (S (S (S Z))))))) = Seven 0
-nMod15 (S (S (S (S (S (S (S (S Z)))))))) = Eight 0
-nMod15 (S (S (S (S (S (S (S (S (S Z))))))))) = Nine 0
+-- Base
+nMod15 Z = Zero {n=Z}
+nMod15 (S Z) = One {n=Z}
+nMod15 (S (S Z)) = Two{n=Z}
+nMod15 (S (S (S Z))) = Three {n=Z}
+nMod15 (S (S (S (S Z)))) = Four {n=Z}
+nMod15 (S (S (S (S (S Z))))) = Five {n=Z}
+nMod15 (S (S (S (S (S (S Z)))))) = Six {n=Z}
+nMod15 (S (S (S (S (S (S (S Z))))))) = Seven {n=Z}
+nMod15 (S (S (S (S (S (S (S (S Z)))))))) = Eight {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S Z))))))))) = Nine {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S (S Z)))))))))) = Ten {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = Eleven {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = Twelve {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = Thirteen {n=Z}
+nMod15 (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))))) = Fourteen {n=Z}
+-- Recursive
+nMod15 (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S k))))))))))))))) with (nMod15 k)
+       nMod15 (S (S (15 * j ))) | Zero = let res = nMod15 j in ? help
 
 
 {-
