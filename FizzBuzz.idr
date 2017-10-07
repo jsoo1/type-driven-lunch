@@ -2,25 +2,34 @@ module InterviewQuestion
 
 
 data NatMod15 : Nat -> Type where
-     Zero     : NatMod15    (15 * n)
-     One      : NatMod15    (S (15* n))
-     Two      : NatMod15    (S (S (15* n)))
-     Three    : NatMod15    (S (S (S (15* n))))
-     Four     : NatMod15    (S (S (S (S (15* n)))))
-     Five     : NatMod15    (S (S (S (S (S (15* n))))))
-     Six      : NatMod15    (S (S (S (S (S (S (15* n)))))))
-     Seven    : NatMod15    (S (S (S (S (S (S (S (15* n))))))))
-     Eight    : NatMod15    (S (S (S (S (S (S (S (S (15* n)))))))))
-     Nine     : NatMod15    (S (S (S (S (S (S (S (S (S (15* n))))))))))
-     Ten      : NatMod15    (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))
-     Eleven   : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (15* n))))))))))))
-     Twelve   : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))))
-     Thirteen : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (S (15* n))))))))))))))
-     Fourteen : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))))))
+     Zero     : (n : Nat) -> NatMod15 (15 * n)
+     One      : (n : Nat) -> NatMod15 (1 + (15 * n))
+     Two      : (n : Nat) -> NatMod15 (2 + (15 * n))
+     Three    : (n : Nat) -> NatMod15 (3 + (15 * n))
+     Four     : (n : Nat) -> NatMod15 (4 + (15 * n))
+     Five     : (n : Nat) -> NatMod15 (5 + (15 * n))
+     Six      : (n : Nat) -> NatMod15 (6 + (15 * n))
+     Seven    : (n : Nat) -> NatMod15 (7 + (15 * n))
+     Eight    : (n : Nat) -> NatMod15 (8 + (15 * n))
+     Nine     : (n : Nat) -> NatMod15 (9 + (15 * n))
+     Ten      : (n : Nat) -> NatMod15 (10 + (15 * n))
+     Eleven   : (n : Nat) -> NatMod15 (11 + (15 * n))
+     Twelve   : (n : Nat) -> NatMod15 (12 + (15 * n))
+     Thirteen : (n : Nat) -> NatMod15 (13 + (15 * n))
+     Fourteen : (n : Nat) -> NatMod15 (14 + (15 * n))
 
 
-four : NatMod15
-four = Four 1
+nMod15 : (n : Nat) -> NatMod15 n
+nMod15 Z = Zero 0
+nMod15 (S Z) = One 0
+nMod15 (S (S Z)) = Two 0
+nMod15 (S (S (S Z))) = Three 0
+nMod15 (S (S (S (S Z)))) = Four 0
+nMod15 (S (S (S (S (S Z))))) = Five 0
+nMod15 (S (S (S (S (S (S Z)))))) = Six 0
+nMod15 (S (S (S (S (S (S (S Z))))))) = Seven 0
+nMod15 (S (S (S (S (S (S (S (S Z)))))))) = Eight 0
+nMod15 (S (S (S (S (S (S (S (S (S Z))))))))) = Nine 0
 
 
 {-
@@ -85,13 +94,12 @@ data FB : Nat -> Type where
 
 
 
-halp : fizzbuzz 3 = 0
-halp = Refl
+-- halp : fizzbuzz 3 = 0
+-- halp = Refl
 
-help : fizzbuzz 3 = fromInteger 0
-help = halp
+-- help : fizzbuzz 3 = fromInteger 0
+-- help = halp
 
 
-fb : FB 3
-fb = Fizz 1 Refl (Nil help)
-
+-- fb : FB 3
+-- fb = Fizz 1 Refl (Nil help)
