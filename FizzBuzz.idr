@@ -1,6 +1,28 @@
 module InterviewQuestion
 
 
+data NatMod15 : Nat -> Type where
+     Zero     : NatMod15    (15 * n)
+     One      : NatMod15    (S (15* n))
+     Two      : NatMod15    (S (S (15* n)))
+     Three    : NatMod15    (S (S (S (15* n))))
+     Four     : NatMod15    (S (S (S (S (15* n)))))
+     Five     : NatMod15    (S (S (S (S (S (15* n))))))
+     Six      : NatMod15    (S (S (S (S (S (S (15* n)))))))
+     Seven    : NatMod15    (S (S (S (S (S (S (S (15* n))))))))
+     Eight    : NatMod15    (S (S (S (S (S (S (S (S (15* n)))))))))
+     Nine     : NatMod15    (S (S (S (S (S (S (S (S (S (15* n))))))))))
+     Ten      : NatMod15    (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))
+     Eleven   : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (15* n))))))))))))
+     Twelve   : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))))
+     Thirteen : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (S (15* n))))))))))))))
+     Fourteen : NatMod15    (S (S (S (S (S (S (S (S (S (S (S (S (S (S (15* n)))))))))))))))
+
+
+four : NatMod15
+four = Four 1
+
+
 {-
 for the fizzbuzz numbers:
 
