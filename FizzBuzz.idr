@@ -1,6 +1,26 @@
 module InterviewQuestion
--- IRC help
--- natMod15Succ : NatMod15 n -> NatMod15 (S n)
+%default total
+
+
+firstFizzbuzz : Nat -> Nat
+firstFizzbuzz k with (modNatNZ k 15 SIsNotZ)
+  firstFizzbuzz k | Z = k
+  firstFizzbuzz k | (S Z) = Nat.minus k 1
+  firstFizzbuzz k | (S (S Z)) = Nat.minus k 2
+  firstFizzbuzz k | (S (S (S Z))) = k
+  firstFizzbuzz k | (S (S (S (S Z)))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S Z))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S Z)))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S Z))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S Z)))))))) = Nat.minus k 2
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S Z))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S (S j)))))))))))))) =
+                Nat.minus k 2
+
 
 fizzbuzz : Nat -> Nat
 fizzbuzz k with (modNatNZ k 15 SIsNotZ)
@@ -22,26 +42,31 @@ fizzbuzz k with (modNatNZ k 15 SIsNotZ)
 
 
 data FB : Nat -> Type where
-      Nil : (n:Nat) -> Z = n -> FB Z
-      Fizz : (n:Nat) -> Z = modNatNZ n 3 SIsNotZ -> FB (fizzbuzz n) -> FB n
-      Buzz : (n:Nat) -> Z = modNatNZ n 5 SIsNotZ -> FB (fizzbuzz n) -> FB n
-      FizzBuzz : (n:Nat) -> Z = modNatNZ n 15 SIsNotZ -> FB (fizzbuzz n) -> FB n
+     Nil       : (n:Nat) ->
+                 Z = (firstFizzbuzz n) ->
+                 FB Z
+     Fizz      : (n:Nat) ->
+                 Z = modNatNZ (firstFizzbuzz n) 3 SIsNotZ ->
+                 FB (fizzbuzz (firstFizzbuzz n)) ->
+                 FB (firstFizzbuzz n)
+     Buzz      : (n:Nat) ->
+                 Z = modNatNZ (firstFizzbuzz n) 5 SIsNotZ ->
+                 FB (fizzbuzz (firstFizzbuzz n)) ->
+                 FB (firstFizzbuzz n)
+     FizzBuzz  : (n:Nat) ->
+                 Z = modNatNZ (firstFizzbuzz n) 15 SIsNotZ ->
+                 FB (fizzbuzz (firstFizzbuzz n)) ->
+                 FB (firstFizzbuzz n)
+
 
 
 mkFizzBuzz : (n:Nat) -> FB n
 mkFizzBuzz Z = Nil Z Refl
-mkFizzBuzz n with (modNatNZ n 15 SIsNotZ) proof prf
-  mkFizzBuzz n | Z = FizzBuzz n ?help (mkFizzBuzz (fizzbuzz n))
-  -- mkFizzBuzz n | (S Z) = ?help_rhs_3
-  -- mkFizzBuzz n | (S (S Z)) = ?help_rhs_2
-  -- mkFizzBuzz n | (S (S (S Z))) = ?help_rhs_4
-  -- mkFizzBuzz n | (S (S (S (S Z)))) = ?help_rhs_5
-  -- mkFizzBuzz n | (S (S (S (S (S Z))))) = ?help_rhs_6
-  -- mkFizzBuzz n | (S (S (S (S (S (S Z)))))) = ?help_rhs_7
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S Z))))))) = ?help_rhs_8
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S Z)))))))) = ?help_rhs_9
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S Z))))))))) = ?help_rhs_10
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = ?help_rhs_11
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = ?help_rhs_12
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = ?help_rhs_13
-  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = ?help_rhs_15
+mkFizzBuzz n with (firstFizzbuzz n) proof prf
+  mkFizzBuzz n | Z = FizzBuzz n ?help_prf (mkFizzBuzz (fizzbuzz n))
+  -- mkFizzBuzz n | (S (S (S Z))) = Fizz n prf (mkFizzBuzz (fizzbuzz n))
+  -- mkFizzBuzz n | (S (S (S (S (S Z))))) = ?five
+  -- mkFizzBuzz n | (S (S (S (S (S (S Z)))))) = ?six
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S Z))))))))) = ?nine
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = ?ten
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S (S (S k)))))))))))) = ?twelve
