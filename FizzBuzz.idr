@@ -28,26 +28,44 @@ data FB : Nat -> Type where
      FizzBuzz : (n:Nat) -> Z = modNatNZ n 15 SIsNotZ -> FB (fizzbuzz n) -> FB n
 
 
-firstFizzbuzz : Nat -> Type
+firstFizzbuzz : Nat -> Nat
 firstFizzbuzz k with (modNatNZ k 15 SIsNotZ)
-  firstFizzbuzz k | Z = FB k
-  firstFizzbuzz k | (S Z) = FB (Nat.minus k 1)
-  firstFizzbuzz k | (S (S Z)) = FB (Nat.minus k 2)
-  firstFizzbuzz k | (S (S (S Z))) = FB k
-  firstFizzbuzz k | (S (S (S (S Z)))) = FB (Nat.minus k 1)
-  firstFizzbuzz k | (S (S (S (S (S Z))))) = FB k
-  firstFizzbuzz k | (S (S (S (S (S (S Z)))))) = FB k
-  firstFizzbuzz k | (S (S (S (S (S (S (S Z))))))) = FB (Nat.minus k 1)
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S Z)))))))) = FB (Nat.minus k 2)
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S Z))))))))) = FB k
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = FB k
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = FB (Nat.minus k 1)
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = FB k
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = FB (Nat.minus k 1)
-  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S (S j)))))))))))))) = FB (Nat.minus k 2)
+  firstFizzbuzz k | Z = k
+  firstFizzbuzz k | (S Z) = Nat.minus k 1
+  firstFizzbuzz k | (S (S Z)) = Nat.minus k 2
+  firstFizzbuzz k | (S (S (S Z))) = k
+  firstFizzbuzz k | (S (S (S (S Z)))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S Z))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S Z)))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S Z))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S Z)))))))) = Nat.minus k 2
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S Z))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = k
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = Nat.minus k 1
+  firstFizzbuzz k | (S (S (S (S (S (S (S (S (S (S (S (S (S (S j)))))))))))))) = Nat.minus k 2
 
 
-mkFizzBuzz : (n:Nat) -> firstFizzbuzz n
+firstFB : Nat -> Type
+firstFB k = FB (firstFizzbuzz k)
+
+
+mkFizzBuzz : (n:Nat) -> firstFB n
 mkFizzBuzz Z = Nil Z Refl
-mkFizzBuzz n with (_)
-  mkFizzBuzz n | with_pat = ?n_rhs
+mkFizzBuzz (S Z) = Nil Z Refl
+mkFizzBuzz (S (S Z)) = Nil Z Refl
+mkFizzBuzz (S (S (S Z))) = Fizz 3 Refl (mkFizzBuzz (fizzbuzz 3))
+mkFizzBuzz (S (S (S (S Z)))) = Fizz 3 Refl (mkFizzBuzz (fizzbuzz 3))
+mkFizzBuzz (S (S (S (S (S Z))))) = Buzz 5 Refl (mkFizzBuzz (fizzbuzz 5))
+mkFizzBuzz (S (S (S (S (S (S Z)))))) = Fizz 6 Refl (mkFizzBuzz (fizzbuzz 6))
+mkFizzBuzz (S (S (S (S (S (S (S Z))))))) = Fizz 6 Refl (mkFizzBuzz (fizzbuzz 6))
+mkFizzBuzz (S (S (S (S (S (S (S (S Z)))))))) = Fizz 6 Refl (mkFizzBuzz (fizzbuzz 6))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S Z))))))))) = Fizz 9 Refl (mkFizzBuzz (fizzbuzz 9))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S Z)))))))))) = Buzz 10 Refl (mkFizzBuzz (fizzbuzz 10))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = Buzz 10 Refl (mkFizzBuzz (fizzbuzz 10))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))))) = FizzBuzz 15 Refl (mkFizzBuzz (fizzbuzz 15))
+mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S k)))))))))))))))) = ?rhs_3
