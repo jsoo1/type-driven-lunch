@@ -2,6 +2,9 @@ module InterviewQuestion
 %default total
 
 
+-- natMod15Succ : NatMod15 n -> NatMod15 (S n)
+
+
 fizzbuzz : Nat -> Nat
 fizzbuzz k with (modNatNZ k 15 SIsNotZ)
   fizzbuzz k | Z = Nat.minus k 3
@@ -67,5 +70,11 @@ mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S Z))))))))))) = Buzz 10 Refl (mkFizzB
 mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
 mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
 mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))))) = Fizz 12 Refl (mkFizzBuzz (fizzbuzz 12))
-mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S Z))))))))))))))) = FizzBuzz 15 Refl (mkFizzBuzz (fizzbuzz 15))
-mkFizzBuzz (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S k)))))))))))))))) = ?rhs_3
+mkFizzBuzz n with (modNatNZ (firstFizzbuzz n) 15 SIsNotZ) proof p
+  mkFizzBuzz n | Z = FizzBuzz (firstFizzbuzz n) p ?help_next_0
+  -- mkFizzBuzz n | (S (S (S Z))) = Fizz (firstFizzbuzz n) p ?help_next_1
+  -- mkFizzBuzz n | (S (S (S (S (S Z))))) = Buzz (firstFizzbuzz n) p ?help_next_2
+  -- mkFizzBuzz n | (S (S (S (S (S (S Z)))))) = Fizz (firstFizzbuzz n) p ?help_next_3
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S Z))))))))) = Fizz (firstFizzbuzz n) p ?help_next_4
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S Z)))))))))) = ?helpt_1
+  -- mkFizzBuzz n | (S (S (S (S (S (S (S (S (S (S (S (S Z)))))))))))) = ?helpt_3
