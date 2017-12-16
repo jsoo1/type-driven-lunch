@@ -131,103 +131,22 @@ ite_false_x_y_y a_false ite_a_x_y {a} {x} {y} with (ifThenElse a x y) proof  ite
 
 
 using (x:Nat, y:Nat, z:Nat)
-  mult_div_inverse :
+  mult_div_inverse_necessity :
     {y_non_zero: Not (y = Z)} ->
     {z_equals: z = x * y} ->
-    divNatNZ x y y_non_zero = x
+    divNatNZ z y y_non_zero = x
 
-  mult_div_inverse
-    {y_non_zero}
-    {x = Z} {y = y} {z = z}
-    with (divNatNZ 0 y y_non_zero) proof z_zero
+  -- y is non-zero
+  mult_div_inverse_necessity {y_non_zero} {y = Z} with (y_non_zero Refl)
+    mult_div_inverse_necessity {y_non_zero} {y = Z} | y_zero impossible
 
-    mult_div_inverse
-      {y_non_zero}
-      {x = Z} {y = Z} {z = z}
-      | z_div_y
-      with (y_non_zero Refl)
+  -- non-trivial case
+  mult_div_inverse_necessity {y_non_zero} {x} {y = (S k)} {z} with (divNatNZ z (S k) y_non_zero) proof z_div_sk_prf
+    mult_div_inverse_necessity {x = Z} {y = (S k)} {z = Z} | Z =
+      Refl
 
-      mult_div_inverse
-        {x = Z} {y = Z} {z = z}
-        | z_div_y
-        | y_zero impossible
+    mult_div_inverse_necessity {x = (S j)} {y = (S k)} {z = Z} | Z = ?mult_div_inverse_necessity_4
 
-    mult_div_inverse
-      {y_non_zero}
-      {x = Z} {y = (S k)} {z = z}
-      | z_div_y
-      with (divNatNZ Z (S k) y_non_zero)
+    mult_div_inverse_necessity {y = (S k)} {z = (S j)} | Z = ?mult_div_inverse_necessity_2
 
-      mult_div_inverse
-        {y_non_zero}
-        {x = Z} {y = (S k)} {z = z}
-        | z_div_y
-        | Z =
-          rewrite z_zero in
-          Refl
-
-      mult_div_inverse
-        {y_non_zero}
-        {x = Z} {y = (S k)} {z = z}
-        | z_div_y
-        | (S j) =
-          rewrite z_zero in
-          Refl
-
-  mult_div_inverse
-    {y_non_zero}
-    {x = (S k)} {y = Z} {z = z}
-    with (y_non_zero Refl)
-
-    mult_div_inverse
-      {y_non_zero}
-      {x = (S k)} {y = Z} {z = z}
-      | y_zero impossible
-
-  mult_div_inverse
-    {y_non_zero}
-    {x = (S k)} {y = (S j)} {z = z}
-    with (lte (S k) j) proof sk_lte_j
-
-    mult_div_inverse
-      {y_non_zero}
-      {x = (S k)} {y = (S j)} {z = z}
-      | False
-      with (divNatNZ (S k) (S j) y_non_zero) proof sk_divnat_sj
-
-      mult_div_inverse
-        {y_non_zero}
-        {x = (S k)} {y = (S j)} {z = z}
-        | False
-        | Z
-        with (ite_false_x_y_y sk_lte_j sk_divnat_sj) proof something_p
-
-        mult_div_inverse
-          {y_non_zero = _}
-          {x = (S _)} {y = (S _)} {z = _}
-          | False
-          | Z
-          | Refl impossible
-
-      mult_div_inverse
-        {y_non_zero}
-        {x = (S k)} {y = (S j)} {z = z}
-        | False
-        | (S i)
-        with (ite_false_x_y_y sk_lte_j sk_divnat_sj) proof sk_div'_sj_prf
-
-        mult_div_inverse
-          {y_non_zero}
-          {x = (S k)} {y = (S j)} {z = z}
-          | False
-          | (S i)
-          | sk_div'_sj =
-            ?heell
-            -- rewrite sym sk_div'_sj in
-            -- ?heeellll
-
-    mult_div_inverse
-      {y_non_zero}
-      {x = (S k)} {y = (S j)} {z = z}
-      | True =
-        ?hldhder
+    mult_div_inverse_necessity {y = (S k)} {z} | (S j) = ?mult_div_inverse_necessity_3
