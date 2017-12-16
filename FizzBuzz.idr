@@ -117,36 +117,3 @@ using (x:Nat, y:Nat, z:Nat, r:Nat)
       rewrite z_equals in
       ?help_2
 
-
-||| ```
-||| Proof that if False = cond and z = ifThenElse a x y then z = y
-||| ```
-ite_false_x_y_y : False = a ->  z = ifThenElse a x y ->  z = y
-ite_false_x_y_y a_false ite_a_x_y {a} {x} {y} with (ifThenElse a x y) proof  ite_2_prf
-  ite_false_x_y_y a_false ite_a_x_y {a} {x} {y} | ite_2 =
-    rewrite ite_a_x_y in
-    rewrite ite_2_prf in
-    rewrite sym a_false in
-    Refl
-
-
-using (x:Nat, y:Nat, z:Nat)
-  mult_div_inverse_necessity :
-    {y_non_zero: Not (y = Z)} ->
-    {z_equals: z = x * y} ->
-    divNatNZ z y y_non_zero = x
-
-  -- y is non-zero
-  mult_div_inverse_necessity {y_non_zero} {y = Z} with (y_non_zero Refl)
-    mult_div_inverse_necessity {y_non_zero} {y = Z} | y_zero impossible
-
-  -- non-trivial case
-  mult_div_inverse_necessity {y_non_zero} {x} {y = (S k)} {z} with (divNatNZ z (S k) y_non_zero) proof z_div_sk_prf
-    mult_div_inverse_necessity {x = Z} {y = (S k)} {z = Z} | Z =
-      Refl
-
-    mult_div_inverse_necessity {x = (S j)} {y = (S k)} {z = Z} | Z = ?mult_div_inverse_necessity_4
-
-    mult_div_inverse_necessity {y = (S k)} {z = (S j)} | Z = ?mult_div_inverse_necessity_2
-
-    mult_div_inverse_necessity {y = (S k)} {z} | (S j) = ?mult_div_inverse_necessity_3
