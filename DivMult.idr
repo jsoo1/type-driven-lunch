@@ -30,7 +30,7 @@ res_gte_succ_mult_succ_left z_eq_succ_mult_succ {z = (S k)} {k = Z} {j = (S j)} 
 res_gte_succ_mult_succ_left z_eq_succ_mult_succ {z = z} {k = (S k)} {j = j} =
   rewrite z_eq_succ_mult_succ in
   rewrite sym (plusSuccRightSucc j (plus j (mult k (S j)))) in
-  LTESucc (LTESucc ?help)
+  LTESucc (LTESucc ?next)
 
 
 res_gte_succ_mult_succ_right : z = (S k) * (S j) -> LTE (S k) z
