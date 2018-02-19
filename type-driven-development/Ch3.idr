@@ -7,11 +7,6 @@ import Data.Vect
 %default total
 
 
-infixl 9 ..
-(..) :  (c -> d) -> (a -> b -> c) -> a -> b -> d
-(..) = (.).(.)
-
-
 transMat : Vect n (Vect m a) -> Vect m (Vect n a)
 transMat [] = replicate _ []
 transMat (row :: rows) = zipWith (::) row $ transMat rows
