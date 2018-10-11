@@ -155,29 +155,48 @@ prf2 :
 prf2 = Refl
 
 
-data PowerSource = Petrol | Pedal
+data ExternalPower = Electric | Petrol
+
+
+%name ExternalPower externalPower, externalPower1, externalPower2
+
+
+data PowerSource : Type where
+     Pedal : PowerSource
+     External: ExternalPower -> PowerSource
 
 
 %name PowerSource powerSource, powerSource1, powerSource2
 
 
 data Vehicle : PowerSource -> Type where
+     Unicycle : Vehicle Pedal
      Bicycle : Vehicle Pedal
-     Car : (fuel : Nat) -> Vehicle Petrol
-     Bus : (fule : Nat) -> Vehicle Petrol
+     Motorcycle : (fuel : Nat) -> (power : ExternalPower) -> Vehicle $ External power
+     Car : (fuel : Nat) -> (power : ExternalPower) -> Vehicle $ External power
+     Bus : (fuel : Nat) -> (power : ExternalPower) -> Vehicle $ External power
+     Tram : (fuel : Nat) -> Vehicle $ External Electric
 
 
 %name Vehicle vehicle, vehicle1, vehicle2
 
 
-
 wheels : Vehicle power -> Nat
 wheels Bicycle = 2
-wheels (Car fuel) = 4
-wheels (Bus fule) = 4
+wheels Unicycle = 1
+wheels (Motorcycle _ _) = 2
+wheels (Car _ _) = 4
+wheels (Bus _ _) = 4
+wheels (Tram fuel) = 12
 
 
-refuel : Vehicle Petrol -> Vehicle Petrol
+refuel : Vehicle (External power) -> Vehicle (External power)
 refuel Bicycle impossible
-refuel (Car fuel) = Car 100
-refuel (Bus fule) = Bus 200
+refuel Unicycle impossible
+refuel (Motorcycle _ Electric) = Motorcycle 45 Electric
+refuel (Motorcycle _ Petrol) = Motorcycle 50 Petrol
+refuel (Car _ Electric) = Car 75 Electric
+refuel (Car _ Petrol) = Car 100 Petrol
+refuel (Bus _ Electric) = Bus 140 Electric
+refuel (Bus _ Petrol) = Bus 200 Petrol
+refuel (Tram _) = Tram 1000
